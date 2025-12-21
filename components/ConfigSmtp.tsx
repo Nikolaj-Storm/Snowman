@@ -1,6 +1,6 @@
 import React from 'react';
 import { SmtpConfig } from '../types';
-import { Server, Lock, User, Globe } from 'lucide-react';
+import { Server, Lock, User, Globe, ArrowRight } from 'lucide-react';
 
 interface ConfigSmtpProps {
   config: SmtpConfig;
@@ -15,19 +15,16 @@ export const ConfigSmtp: React.FC<ConfigSmtpProps> = ({ config, updateConfig, on
 
   return (
     <div className="max-w-2xl mx-auto p-6">
-      <div className="text-center mb-8">
-        <div className="w-16 h-16 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4 text-brand-600">
-          <Server size={32} />
-        </div>
-        <h2 className="text-2xl font-bold text-slate-800">Connect Email SMTP</h2>
-        <p className="text-slate-500">Configure your outgoing mail server to start sending campaigns.</p>
+      <div className="text-center mb-12">
+        <h2 className="text-4xl font-serif font-medium text-brand-900 mb-3">Connect Server</h2>
+        <p className="text-brand-600 font-light">Configure your outgoing mail server settings.</p>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
-              <Globe size={16} /> Host
+      <div className="bg-white rounded-lg shadow-soft border border-brand-800/5 p-10 space-y-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
+          <div className="space-y-1 group">
+            <label className="text-xs font-bold tracking-widest text-brand-400 uppercase flex items-center gap-2 mb-2 group-focus-within:text-brand-700 transition-colors">
+              <Globe size={14} /> Host
             </label>
             <input
               type="text"
@@ -35,12 +32,12 @@ export const ConfigSmtp: React.FC<ConfigSmtpProps> = ({ config, updateConfig, on
               value={config.host}
               onChange={handleChange}
               placeholder="smtp.gmail.com"
-              className="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-colors"
+              className="w-full pb-2 bg-transparent border-b border-brand-200 focus:border-brand-800 outline-none transition-all placeholder:text-brand-200 text-brand-900"
             />
           </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
-              <Server size={16} /> Port
+          <div className="space-y-1 group">
+            <label className="text-xs font-bold tracking-widest text-brand-400 uppercase flex items-center gap-2 mb-2 group-focus-within:text-brand-700 transition-colors">
+              <Server size={14} /> Port
             </label>
             <input
               type="text"
@@ -48,12 +45,12 @@ export const ConfigSmtp: React.FC<ConfigSmtpProps> = ({ config, updateConfig, on
               value={config.port}
               onChange={handleChange}
               placeholder="587"
-              className="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-colors"
+              className="w-full pb-2 bg-transparent border-b border-brand-200 focus:border-brand-800 outline-none transition-all placeholder:text-brand-200 text-brand-900"
             />
           </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
-              <User size={16} /> Username
+          <div className="space-y-1 group">
+            <label className="text-xs font-bold tracking-widest text-brand-400 uppercase flex items-center gap-2 mb-2 group-focus-within:text-brand-700 transition-colors">
+              <User size={14} /> Username
             </label>
             <input
               type="text"
@@ -61,12 +58,12 @@ export const ConfigSmtp: React.FC<ConfigSmtpProps> = ({ config, updateConfig, on
               value={config.user}
               onChange={handleChange}
               placeholder="you@company.com"
-              className="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-colors"
+              className="w-full pb-2 bg-transparent border-b border-brand-200 focus:border-brand-800 outline-none transition-all placeholder:text-brand-200 text-brand-900"
             />
           </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
-              <Lock size={16} /> Password
+          <div className="space-y-1 group">
+            <label className="text-xs font-bold tracking-widest text-brand-400 uppercase flex items-center gap-2 mb-2 group-focus-within:text-brand-700 transition-colors">
+              <Lock size={14} /> Password
             </label>
             <input
               type="password"
@@ -74,17 +71,18 @@ export const ConfigSmtp: React.FC<ConfigSmtpProps> = ({ config, updateConfig, on
               value={config.pass}
               onChange={handleChange}
               placeholder="••••••••"
-              className="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-colors"
+              className="w-full pb-2 bg-transparent border-b border-brand-200 focus:border-brand-800 outline-none transition-all placeholder:text-brand-200 text-brand-900"
             />
           </div>
         </div>
 
-        <div className="pt-4 flex justify-end">
+        <div className="pt-8 flex justify-end">
           <button
             onClick={onNext}
-            className="px-6 py-2 bg-brand-600 hover:bg-brand-700 text-white font-medium rounded-lg shadow-md transition-all transform hover:translate-y-[-1px]"
+            className="group px-8 py-3 bg-brand-800 hover:bg-brand-900 text-cream-100 font-medium rounded shadow-soft transition-all transform flex items-center gap-3"
           >
-            Save & Continue
+            <span>Save & Continue</span>
+            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
       </div>

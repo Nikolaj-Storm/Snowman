@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { EmailTemplate } from '../types';
 import { generateEmailTemplate } from '../services/geminiService';
-import { Edit3, Sparkles, MessageSquare } from 'lucide-react';
+import { Edit3, Sparkles, MessageSquare, ArrowRight, ArrowLeft } from 'lucide-react';
 
 interface ConfigTemplateProps {
   template: EmailTemplate;
@@ -46,109 +46,106 @@ export const ConfigTemplate: React.FC<ConfigTemplateProps> = ({
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
-      <div className="text-center mb-8">
-        <div className="w-16 h-16 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4 text-brand-600">
-          <Edit3 size={32} />
-        </div>
-        <h2 className="text-2xl font-bold text-slate-800">Design Email Templates</h2>
-        <p className="text-slate-500">Create your initial outreach and follow-up emails manually or with AI.</p>
+    <div className="max-w-7xl mx-auto p-6">
+      <div className="text-center mb-12">
+        <h2 className="text-4xl font-serif font-medium text-brand-900 mb-3">Compose</h2>
+        <p className="text-brand-600 font-light">Craft your message manually or invoke the AI assistant.</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Editor Column */}
-        <div className="lg:col-span-2 space-y-6">
-          <div className="flex gap-2 bg-slate-100 p-1 rounded-lg w-fit">
+        <div className="lg:col-span-8 space-y-6">
+          <div className="flex gap-1 border-b border-brand-200 w-full">
             <button
               onClick={() => setActiveTab('initial')}
-              className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${activeTab === 'initial' ? 'bg-white shadow text-brand-600' : 'text-slate-500 hover:text-slate-700'}`}
+              className={`px-6 py-3 text-sm font-medium tracking-wide transition-all border-b-2 ${activeTab === 'initial' ? 'border-brand-800 text-brand-900' : 'border-transparent text-brand-400 hover:text-brand-600'}`}
             >
               Initial Email
             </button>
             <button
               onClick={() => setActiveTab('followup')}
-              className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${activeTab === 'followup' ? 'bg-white shadow text-brand-600' : 'text-slate-500 hover:text-slate-700'}`}
+              className={`px-6 py-3 text-sm font-medium tracking-wide transition-all border-b-2 ${activeTab === 'followup' ? 'border-brand-800 text-brand-900' : 'border-transparent text-brand-400 hover:text-brand-600'}`}
             >
-              Follow-up Email
+              Follow-up
             </button>
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 space-y-4">
+          <div className="bg-white rounded-lg shadow-soft border border-brand-800/5 p-8 space-y-6">
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-700">Subject Line</label>
               <input
                 type="text"
                 value={currentTemplate.subject}
                 onChange={(e) => updateCurrent({ subject: e.target.value })}
-                className="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none"
-                placeholder="e.g. Quick question about {company}"
+                className="w-full px-0 py-3 text-xl font-serif text-brand-900 placeholder:text-brand-300 border-b border-brand-100 focus:border-brand-800 outline-none bg-transparent transition-colors"
+                placeholder="Subject Line..."
               />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-700 flex justify-between">
-                <span>Email Body</span>
-                <span className="text-xs text-slate-400">Supports &#123;name&#125;, &#123;company&#125;</span>
-              </label>
               <textarea
                 value={currentTemplate.body}
                 onChange={(e) => updateCurrent({ body: e.target.value })}
-                rows={12}
-                className="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none font-mono text-sm"
-                placeholder="Hi {name}, ..."
+                rows={16}
+                className="w-full px-4 py-4 rounded bg-cream-50/50 border border-brand-100 focus:border-brand-400 focus:bg-white outline-none font-sans text-brand-800 leading-relaxed resize-none transition-all placeholder:text-brand-200"
+                placeholder="Write your email content here... Use {name} and {company} as variables."
               />
+              <div className="flex justify-end text-xs text-brand-400 font-medium uppercase tracking-wider">
+                Variables: &#123;name&#125;, &#123;company&#125;
+              </div>
             </div>
           </div>
         </div>
 
         {/* AI Assistant Column */}
-        <div className="lg:col-span-1">
-          <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl border border-indigo-100 p-6 h-full">
-            <div className="flex items-center gap-2 mb-4 text-indigo-700 font-semibold">
-              <Sparkles size={20} />
-              <h3>Gemini Assistant</h3>
-            </div>
-            <p className="text-sm text-indigo-600/80 mb-6">
-              Stuck on what to write? Let Gemini generate a high-converting email for you.
-            </p>
-
-            <div className="space-y-4">
-              <div>
-                <label className="block text-xs font-semibold text-indigo-800 uppercase tracking-wide mb-2">
-                  What is this email about?
-                </label>
-                <textarea
-                  value={aiPrompt}
-                  onChange={(e) => setAiPrompt(e.target.value)}
-                  className="w-full p-3 rounded-lg border border-indigo-200 bg-white focus:ring-2 focus:ring-indigo-400 outline-none text-sm"
-                  rows={4}
-                  placeholder="e.g. Offering web development services to startups..."
-                />
-              </div>
-
-              <button
-                onClick={handleAiGenerate}
-                disabled={isGenerating || !aiPrompt}
-                className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg shadow-lg shadow-indigo-200 transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
-              >
-                {isGenerating ? (
-                  <span className="animate-pulse">Generating...</span>
-                ) : (
-                  <>
-                    <Sparkles size={18} /> Generate Draft
-                  </>
-                )}
-              </button>
-            </div>
+        <div className="lg:col-span-4">
+          <div className="bg-brand-900 text-cream-100 rounded-lg p-8 h-full shadow-soft flex flex-col relative overflow-hidden">
+            {/* Decorative texture */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-brand-800 rounded-full blur-3xl -mr-10 -mt-10 opacity-50"></div>
             
-            <div className="mt-8 pt-6 border-t border-indigo-200/50">
-              <div className="flex items-start gap-3">
-                 <div className="p-2 bg-indigo-100 rounded-lg text-indigo-600">
-                    <MessageSquare size={16} />
-                 </div>
-                 <div>
-                    <h4 className="text-sm font-semibold text-indigo-900">Pro Tip</h4>
-                    <p className="text-xs text-indigo-700 mt-1">
-                        Use specific details about the pain points of your target audience for better results.
+            <div className="relative z-10">
+              <div className="flex items-center gap-3 mb-6 text-gold-500">
+                <Sparkles size={20} />
+                <h3 className="font-serif text-xl italic">Gemini Assistant</h3>
+              </div>
+              
+              <p className="text-sm text-brand-200 font-light mb-8 leading-relaxed">
+                Describe the purpose of your email, and let our AI craft a professional draft tailored to your tone.
+              </p>
+
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-[10px] font-bold text-brand-400 uppercase tracking-widest mb-3">
+                    Prompt
+                  </label>
+                  <textarea
+                    value={aiPrompt}
+                    onChange={(e) => setAiPrompt(e.target.value)}
+                    className="w-full p-4 rounded bg-brand-950/50 border border-brand-700 text-cream-100 focus:border-gold-500/50 outline-none text-sm transition-colors placeholder:text-brand-700"
+                    rows={6}
+                    placeholder="e.g. Introduce our new design agency to potential startup clients..."
+                  />
+                </div>
+
+                <button
+                  onClick={handleAiGenerate}
+                  disabled={isGenerating || !aiPrompt}
+                  className="w-full py-3 bg-gold-500 hover:bg-gold-600 text-brand-950 font-bold rounded shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:grayscale"
+                >
+                  {isGenerating ? (
+                    <span className="animate-pulse">Crafting...</span>
+                  ) : (
+                    <>
+                      <Sparkles size={16} /> Generate Draft
+                    </>
+                  )}
+                </button>
+              </div>
+              
+              <div className="mt-12 pt-6 border-t border-brand-800">
+                 <div className="flex gap-3">
+                    <MessageSquare size={16} className="text-brand-400 mt-1 shrink-0" />
+                    <p className="text-xs text-brand-300 leading-normal">
+                        <span className="text-gold-500 font-bold uppercase text-[10px] tracking-widest block mb-1">Tip</span>
+                        Be specific about the audience pain points for higher conversion rates.
                     </p>
                  </div>
               </div>
@@ -157,9 +154,20 @@ export const ConfigTemplate: React.FC<ConfigTemplateProps> = ({
         </div>
       </div>
 
-      <div className="mt-8 flex justify-between">
-        <button onClick={onBack} className="px-6 py-2 text-slate-600 font-medium hover:text-slate-900">Back</button>
-        <button onClick={onNext} className="px-6 py-2 bg-brand-600 hover:bg-brand-700 text-white font-medium rounded-lg shadow-md transition-all">Continue</button>
+      <div className="mt-12 flex justify-between items-center">
+        <button
+          onClick={onBack}
+          className="px-6 py-2 text-brand-500 font-medium hover:text-brand-800 flex items-center gap-2 group"
+        >
+          <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> Back
+        </button>
+        <button
+          onClick={onNext}
+          className="px-8 py-3 bg-brand-800 hover:bg-brand-900 text-cream-100 font-medium rounded shadow-soft transition-all flex items-center gap-3 group"
+        >
+          <span>Continue</span>
+          <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+        </button>
       </div>
     </div>
   );

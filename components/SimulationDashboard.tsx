@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { CampaignState, Lead } from '../types';
 import { analyzeCampaignPerformance } from '../services/geminiService';
-import { Play, Pause, RefreshCw, Mail, CheckCircle, XCircle, Send, MessageCircle, BarChart2 } from 'lucide-react';
+import { Play, Pause, RefreshCw, Mail, Send, MessageCircle, BarChart2, Terminal } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
 interface SimulationDashboardProps {
@@ -124,83 +124,83 @@ export const SimulationDashboard: React.FC<SimulationDashboardProps> = ({ state,
   };
 
   const chartData = [
-    { name: 'Sent', value: stats.sent, color: '#3b82f6' },
-    { name: 'Opened', value: stats.opened, color: '#f59e0b' },
-    { name: 'Replied', value: stats.replied, color: '#10b981' },
-    { name: 'Bounced', value: stats.bounced, color: '#ef4444' },
+    { name: 'Sent', value: stats.sent, color: '#30664e' },    // Brand 600
+    { name: 'Opened', value: stats.opened, color: '#c5a059' }, // Gold 500
+    { name: 'Replied', value: stats.replied, color: '#1a4231' }, // Brand 800
+    { name: 'Bounced', value: stats.bounced, color: '#9f1239' }, // Red (custom deep)
   ];
 
   return (
     <div className="max-w-7xl mx-auto p-6">
         {/* Header Controls */}
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex justify-between items-center mb-10">
             <div>
-                <h2 className="text-2xl font-bold text-slate-800">Campaign Dashboard</h2>
-                <p className="text-slate-500">Live simulation of your workflow.</p>
+                <h2 className="text-3xl font-serif font-medium text-brand-900">Live Dashboard</h2>
+                <p className="text-brand-600 font-light mt-1">Monitoring active campaign performance.</p>
             </div>
             <div className="flex gap-4">
                  <button 
                     onClick={() => setIsRunning(!isRunning)}
-                    className={`flex items-center gap-2 px-6 py-2 rounded-lg font-medium text-white transition-all ${isRunning ? 'bg-amber-500 hover:bg-amber-600' : 'bg-green-600 hover:bg-green-700'}`}
+                    className={`flex items-center gap-2 px-6 py-2 rounded font-medium text-cream-100 transition-all shadow-soft ${isRunning ? 'bg-gold-600 hover:bg-gold-700' : 'bg-brand-800 hover:bg-brand-900'}`}
                 >
-                    {isRunning ? <><Pause size={20}/> Pause</> : <><Play size={20}/> {simDay > 1 ? 'Resume' : 'Start Campaign'}</>}
+                    {isRunning ? <><Pause size={18} fill="currentColor"/> Pause</> : <><Play size={18} fill="currentColor"/> {simDay > 1 ? 'Resume' : 'Start Campaign'}</>}
                 </button>
                  <button 
                     onClick={onReset}
-                    className="flex items-center gap-2 px-6 py-2 bg-white border border-slate-300 rounded-lg font-medium text-slate-700 hover:bg-slate-50"
+                    className="flex items-center gap-2 px-6 py-2 bg-white border border-brand-200 rounded font-medium text-brand-700 hover:bg-cream-50"
                 >
-                    <RefreshCw size={20}/> Reset
+                    <RefreshCw size={18}/> Reset
                 </button>
             </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
             {/* KPI Cards */}
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
+            <div className="bg-white p-6 rounded shadow-soft border border-brand-800/5 flex items-center justify-between group hover:border-brand-200 transition-all">
                 <div>
-                    <p className="text-slate-500 text-sm font-medium uppercase">Emails Sent</p>
-                    <h3 className="text-3xl font-bold text-slate-800">{stats.sent}</h3>
+                    <p className="text-brand-400 text-xs font-bold tracking-widest uppercase">Emails Sent</p>
+                    <h3 className="text-4xl font-serif text-brand-900 mt-2">{stats.sent}</h3>
                 </div>
-                <div className="p-3 bg-blue-100 rounded-full text-blue-600"><Send size={24} /></div>
+                <div className="p-4 bg-cream-50 rounded-full text-brand-600 group-hover:bg-brand-800 group-hover:text-cream-100 transition-colors"><Send size={20} /></div>
             </div>
-             <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
+             <div className="bg-white p-6 rounded shadow-soft border border-brand-800/5 flex items-center justify-between group hover:border-brand-200 transition-all">
                 <div>
-                    <p className="text-slate-500 text-sm font-medium uppercase">Open Rate</p>
-                    <h3 className="text-3xl font-bold text-slate-800">
+                    <p className="text-brand-400 text-xs font-bold tracking-widest uppercase">Open Rate</p>
+                    <h3 className="text-4xl font-serif text-brand-900 mt-2">
                         {stats.sent > 0 ? Math.round((stats.opened / stats.sent) * 100) : 0}%
                     </h3>
                 </div>
-                <div className="p-3 bg-amber-100 rounded-full text-amber-600"><Mail size={24} /></div>
+                <div className="p-4 bg-cream-50 rounded-full text-brand-600 group-hover:bg-gold-500 group-hover:text-white transition-colors"><Mail size={20} /></div>
             </div>
-             <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
+             <div className="bg-white p-6 rounded shadow-soft border border-brand-800/5 flex items-center justify-between group hover:border-brand-200 transition-all">
                 <div>
-                    <p className="text-slate-500 text-sm font-medium uppercase">Reply Rate</p>
-                    <h3 className="text-3xl font-bold text-slate-800">
+                    <p className="text-brand-400 text-xs font-bold tracking-widest uppercase">Reply Rate</p>
+                    <h3 className="text-4xl font-serif text-brand-900 mt-2">
                          {stats.sent > 0 ? Math.round((stats.replied / stats.sent) * 100) : 0}%
                     </h3>
                 </div>
-                <div className="p-3 bg-green-100 rounded-full text-green-600"><MessageCircle size={24} /></div>
+                <div className="p-4 bg-cream-50 rounded-full text-brand-600 group-hover:bg-brand-600 group-hover:text-white transition-colors"><MessageCircle size={20} /></div>
             </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[500px]">
             {/* Live Visual Graph */}
-            <div className="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex flex-col">
-                <div className="flex justify-between items-center mb-4">
-                    <h3 className="font-semibold text-slate-800 flex items-center gap-2"><BarChart2 size={18}/> Performance Overview</h3>
-                    <span className="text-xs bg-slate-100 px-2 py-1 rounded text-slate-600">Day {simDay}</span>
+            <div className="lg:col-span-2 bg-white p-8 rounded shadow-soft border border-brand-800/5 flex flex-col">
+                <div className="flex justify-between items-center mb-6">
+                    <h3 className="font-serif text-xl text-brand-900 flex items-center gap-2"><BarChart2 size={20} className="text-gold-500"/> Performance</h3>
+                    <span className="text-xs font-bold tracking-widest uppercase bg-brand-50 text-brand-600 px-3 py-1 rounded-full">Day {simDay}</span>
                 </div>
                 
                 <div className="flex-1 w-full min-h-[300px]">
                      <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={chartData}>
-                            <XAxis dataKey="name" stroke="#94a3b8" />
-                            <YAxis stroke="#94a3b8" />
+                            <XAxis dataKey="name" stroke="#94a3b8" tick={{fontFamily: 'sans-serif', fontSize: 12}} />
+                            <YAxis stroke="#94a3b8" tick={{fontFamily: 'sans-serif', fontSize: 12}} />
                             <Tooltip 
-                                contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                                contentStyle={{ borderRadius: '4px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)', fontFamily: 'serif' }}
                                 cursor={{fill: 'transparent'}}
                             />
-                            <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                            <Bar dataKey="value" radius={[2, 2, 0, 0]} barSize={60}>
                                 {chartData.map((entry, index) => (
                                     <Cell key={`cell-${index}`} fill={entry.color} />
                                 ))}
@@ -210,23 +210,32 @@ export const SimulationDashboard: React.FC<SimulationDashboardProps> = ({ state,
                 </div>
 
                 {/* AI Analysis Box */}
-                <div className="mt-4 p-4 bg-gradient-to-r from-violet-50 to-fuchsia-50 rounded-lg border border-violet-100">
-                    <h4 className="text-sm font-semibold text-violet-800 mb-1">Gemini Insight</h4>
-                    <p className="text-sm text-slate-700 italic">
-                        {analysis || "Waiting for campaign data to generate insights..."}
+                <div className="mt-6 p-5 bg-brand-50 rounded border border-brand-100">
+                    <h4 className="text-xs font-bold uppercase tracking-widest text-brand-800 mb-2">Gemini Insight</h4>
+                    <p className="text-sm text-brand-700 italic font-serif leading-relaxed">
+                        {analysis || "Gathering data for performance analysis..."}
                     </p>
                 </div>
             </div>
 
-            {/* Live Logs */}
-            <div className="lg:col-span-1 bg-slate-900 text-slate-200 p-6 rounded-xl shadow-sm border border-slate-800 flex flex-col overflow-hidden">
-                <h3 className="font-mono text-sm uppercase tracking-wider text-slate-500 mb-4">System Activity</h3>
-                <div className="flex-1 overflow-y-auto font-mono text-xs space-y-2 pr-2">
-                    {logs.length === 0 && <span className="text-slate-600">Waiting to start...</span>}
+            {/* Live Logs - Terminal Style */}
+            <div className="lg:col-span-1 bg-brand-950 text-brand-100 p-6 rounded shadow-soft border border-brand-900 flex flex-col overflow-hidden relative">
+                <div className="flex items-center gap-2 mb-4 border-b border-brand-800 pb-4">
+                    <Terminal size={16} className="text-gold-500" />
+                    <h3 className="font-mono text-xs uppercase tracking-widest text-brand-400">System Activity</h3>
+                </div>
+                
+                <div className="flex-1 overflow-y-auto font-mono text-xs space-y-3 pr-2 scrollbar-thin scrollbar-thumb-brand-800">
+                    {logs.length === 0 && <span className="text-brand-700 italic">Waiting for command...</span>}
                     {logs.map((log, i) => (
-                        <div key={i} className="flex gap-2">
-                            <span className="text-slate-500">&gt;</span>
-                            <span className={log.includes('bounced') ? 'text-red-400' : log.includes('opened') ? 'text-amber-400' : log.includes('Reply') ? 'text-green-400' : 'text-blue-300'}>
+                        <div key={i} className="flex gap-3 leading-relaxed opacity-0 animate-[fadeIn_0.3s_ease-out_forwards]">
+                            <span className="text-brand-600 shrink-0">&gt;</span>
+                            <span className={
+                                log.includes('bounced') ? 'text-red-400' : 
+                                log.includes('opened') ? 'text-gold-400' : 
+                                log.includes('Reply') ? 'text-emerald-400' : 
+                                'text-brand-100'
+                            }>
                                 {log}
                             </span>
                         </div>
@@ -236,31 +245,31 @@ export const SimulationDashboard: React.FC<SimulationDashboardProps> = ({ state,
         </div>
 
         {/* Lead Table Status */}
-        <div className="mt-6 bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-            <div className="p-4 bg-slate-50 border-b border-slate-100 font-semibold text-slate-700">Lead Status Tracking</div>
+        <div className="mt-8 bg-white rounded shadow-soft border border-brand-800/5 overflow-hidden">
+            <div className="p-6 bg-cream-50 border-b border-brand-100 font-serif font-medium text-brand-900">Live Status Tracking</div>
             <div className="overflow-x-auto">
                 <table className="w-full text-sm text-left">
-                     <thead className="text-xs text-slate-500 uppercase bg-slate-50">
+                     <thead className="text-xs text-brand-400 uppercase tracking-widest bg-white font-bold">
                         <tr>
-                            <th className="px-6 py-3">Email</th>
-                            <th className="px-6 py-3">Status</th>
-                            <th className="px-6 py-3">Last Event</th>
+                            <th className="px-6 py-4 font-normal">Email</th>
+                            <th className="px-6 py-4 font-normal">Current Status</th>
+                            <th className="px-6 py-4 font-normal">Last Event</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="divide-y divide-brand-50">
                         {leads.slice(0, 10).map(lead => (
-                            <tr key={lead.id} className="border-b border-slate-100">
-                                <td className="px-6 py-3 text-slate-900 font-medium">{lead.email}</td>
-                                <td className="px-6 py-3">
-                                    <span className={`px-2 py-1 rounded text-xs uppercase font-bold
-                                        ${lead.status === 'replied' ? 'bg-green-100 text-green-700' : 
-                                          lead.status === 'bounced' ? 'bg-red-100 text-red-700' : 
-                                          lead.status === 'opened' ? 'bg-amber-100 text-amber-700' : 
-                                          'bg-slate-100 text-slate-600'}`}>
+                            <tr key={lead.id} className="hover:bg-cream-50 transition-colors">
+                                <td className="px-6 py-4 text-brand-900 font-medium">{lead.email}</td>
+                                <td className="px-6 py-4">
+                                    <span className={`px-2 py-1 rounded text-[10px] uppercase tracking-widest font-bold
+                                        ${lead.status === 'replied' ? 'bg-emerald-50 text-emerald-800' : 
+                                          lead.status === 'bounced' ? 'bg-red-50 text-red-800' : 
+                                          lead.status === 'opened' ? 'bg-gold-50 text-gold-700' : 
+                                          'bg-brand-50 text-brand-600'}`}>
                                         {lead.status.replace('_', ' ')}
                                     </span>
                                 </td>
-                                <td className="px-6 py-3 text-slate-500">
+                                <td className="px-6 py-4 text-brand-500 font-light">
                                     {lead.history.length > 0 ? lead.history[lead.history.length - 1].event : '-'}
                                 </td>
                             </tr>
@@ -268,8 +277,14 @@ export const SimulationDashboard: React.FC<SimulationDashboardProps> = ({ state,
                     </tbody>
                 </table>
             </div>
-            {leads.length > 10 && <div className="p-3 text-center text-xs text-slate-500 bg-slate-50">Showing 10 of {leads.length} leads</div>}
+            {leads.length > 10 && <div className="p-4 text-center text-xs text-brand-400 bg-white border-t border-brand-50 uppercase tracking-widest">Showing 10 of {leads.length} leads</div>}
         </div>
+        <style>{`
+          @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(-5px); }
+            to { opacity: 1; transform: translateX(0); }
+          }
+        `}</style>
     </div>
   );
 };

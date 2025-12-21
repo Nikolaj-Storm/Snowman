@@ -35,15 +35,15 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 pb-20">
+    <div className="min-h-screen bg-cream-100 text-brand-900 pb-20 font-sans">
       {/* Top Navigation */}
-      <header className="bg-white border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-           <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center text-white font-bold">A</div>
-              <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-brand-600 to-indigo-600">AutoFlow</h1>
+      <header className="bg-cream-100/80 backdrop-blur-sm border-b border-brand-800/5 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+           <div className="flex items-center gap-3 group cursor-default">
+              <div className="w-10 h-10 bg-brand-800 rounded-lg shadow-soft flex items-center justify-center text-cream-100 font-serif font-bold text-xl group-hover:bg-brand-900 transition-colors">A</div>
+              <h1 className="text-2xl font-serif font-bold text-brand-900 tracking-tight">AutoFlow</h1>
            </div>
-           {state.step < 5 && <div className="text-sm text-slate-500">Draft saved</div>}
+           {state.step < 5 && <div className="text-xs font-medium tracking-widest uppercase text-brand-400">Draft Mode</div>}
         </div>
       </header>
 
@@ -56,7 +56,7 @@ function App() {
       )}
 
       {/* Main Content Area */}
-      <main className="mt-8">
+      <main className="mt-12 opacity-0 animate-[fadeIn_0.6s_ease-out_forwards]">
         {state.step === 1 && (
           <ConfigSmtp 
             config={state.smtp} 
@@ -97,6 +97,13 @@ function App() {
           />
         )}
       </main>
+      
+      <style>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </div>
   );
 }

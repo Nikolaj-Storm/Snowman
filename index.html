@@ -4,40 +4,82 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AutoFlow Campaign Manager</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
         theme: {
           extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              serif: ['Playfair Display', 'serif'],
+            },
             colors: {
               brand: {
-                50: '#f0f9ff',
-                100: '#e0f2fe',
-                500: '#0ea5e9',
-                600: '#0284c7',
-                700: '#0369a1',
-                900: '#0c4a6e',
+                50: '#f2f7f4',
+                100: '#e1ede6',
+                200: '#c3dacd',
+                300: '#96bfab',
+                400: '#649d83',
+                500: '#428065',
+                600: '#30664e',
+                700: '#275240',
+                800: '#1a4231', // Vintage Racing Green Base
+                900: '#163629', // Deepest Green
+                950: '#0b1f18',
+              },
+              cream: {
+                50: '#fcfbf9',
+                100: '#f9f7f2', // Main Background
+                200: '#f0ece3', // Secondary
+                300: '#e6dfce',
+                400: '#d1c4a8',
+              },
+              gold: {
+                400: '#dcc079',
+                500: '#c5a059', // Vintage Gold Accent
+                600: '#b08d48',
               }
+            },
+            boxShadow: {
+              'soft': '0 4px 20px -2px rgba(22, 54, 41, 0.05)',
+              'inner-soft': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.02)',
             }
           }
         }
       }
     </script>
     <style>
+      /* Smooth transitions globally */
+      * {
+        transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 200ms;
+      }
+
       /* Custom scrollbar for better aesthetics */
       ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
+        width: 6px;
+        height: 6px;
       }
       ::-webkit-scrollbar-track {
-        background: #f1f5f9; 
+        background: transparent; 
       }
       ::-webkit-scrollbar-thumb {
-        background: #cbd5e1; 
-        border-radius: 4px;
+        background: #c3dacd; 
+        border-radius: 3px;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #94a3b8; 
+        background: #96bfab; 
+      }
+      
+      body {
+        background-color: #f9f7f2; /* cream-100 */
+        color: #1a4231; /* brand-800 */
       }
     </style>
   <script type="importmap">
@@ -53,7 +95,7 @@
 }
 </script>
 </head>
-  <body class="bg-slate-50 text-slate-900 font-sans antialiased">
+  <body class="bg-cream-100 text-brand-900 font-sans antialiased selection:bg-brand-200 selection:text-brand-900">
     <div id="root"></div>
   </body>
 </html>

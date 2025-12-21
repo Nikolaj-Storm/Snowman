@@ -1,0 +1,5 @@
+{
+  "name": "AutoFlow Campaign Manager",
+  "description": "A visual email campaign automation simulator. Configure SMTP, upload leads, design AI-powered templates, and watch a real-time simulation of the sending and follow-up process.",
+  "requestFramePermissions": []
+}
